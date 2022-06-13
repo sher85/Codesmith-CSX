@@ -1,0 +1,43 @@
+/*
+Write a function once that accepts a callback as input and returns a function.
+When the returned function is called the first time, it should call the callback and return that output.
+If it is called any additional times, instead of calling the callback again it will simply return the output value from the first time it was called.
+*/
+
+// create a function: once
+function once (callback) {
+    // input: callback function
+    // output: callback function and its output value if first time, for subsequent times return only the output value
+
+    // create variable hasBeenCalled: boolean
+    let hasBeenCalled = false; // indicates if callback has been invoked
+    // create variable cachedResult
+    let cachedResult; // stores result of callback invocation
+
+    // create a function - oncifiedCallback
+    function oncifiedCallback(...args) {
+        // if oncifiedCallback has not been called:
+        if (!hasBeenCalled) {
+            // 1. invoke callback with args and store result in cachedResult
+            cachedResult = callback(...args);
+            // 2. set hasbeenCalled to true
+            hasBeenCalled = true;
+        }
+            
+        // return cachedResult
+        return cachedResult;
+    }
+
+    // return oncifiedCallback
+    return oncifiedCallback;
+
+}
+
+const addByTwoOnce = once(function(num) {
+  return num + 2;
+});
+
+// UNCOMMENT THESE TO TEST YOUR WORK!
+console.log(addByTwoOnce(5));  //should log 7
+console.log(addByTwoOnce(10));  //should log 7
+console.log(addByTwoOnce(9001));  //should log 7
